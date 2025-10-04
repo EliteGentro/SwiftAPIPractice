@@ -11,26 +11,32 @@ struct CharacterView: View {
     @State var charactersVM = PokemonViewModel()
     
     var body: some View {
-        VStack{
-            List{
-                ForEach(charactersVM.arrCharacters){pokemon in
-                    Text(pokemon.name)
-                    AsyncImage(url: URL(string : (pokemon.sprites.front_shiny)))
-                        .scaledToFit()
-                        .frame( height: 50)
-                        .padding()
+        NavigationStack{
+            VStack{
+                Text("PokeDex")
+                    .font(.system(.largeTitle, design: .rounded))
+                    .fontWeight(.heavy)
+                    .multilineTextAlignment(.center)
+                List{
+                    ForEach(charactersVM.arrCharacters){pokemon in
+                        NavigationLink{
+                            CharacterDetailView(pokemon: pokemon)
+                        } label:{
+                            CharacterRow(pokemon: pokemon)
+                        }
+                    }
                 }
-            }
-            .task {
-                do{
-                    try await charactersVM.getCharactersPokemon()
-                } catch{
-                    print("error")
+                .task {
+                    do{
+                        try await charactersVM.getCharactersPokemon()
+                    } catch{
+                        print("error")
+                    }
                 }
+                
             }
             
         }
-            
     }
 }
 
