@@ -19,23 +19,23 @@ struct CharacterView: View {
             if charactersVM.isLoading{ //Loading view
                 ProgressView("Loading Pokemon")
             } else{ //View once loaded
-            VStack{
-                Text("PokeDex")
-                    .font(.system(.largeTitle, design: .rounded))
-                    .fontWeight(.heavy)
-                    .multilineTextAlignment(.center)
-                List{
-                    ForEach(charactersVM.arrCharacters){pokemon in
-                        NavigationLink{
-                            CharacterDetailView(pokemon: pokemon)
-                        } label:{
-                            CharacterRow(pokemon: pokemon)
+                VStack{
+                    Text("PokeDex")
+                        .font(.system(.largeTitle, design: .rounded))
+                        .fontWeight(.heavy)
+                        .multilineTextAlignment(.center)
+                    List{
+                        ForEach(charactersVM.arrCharacters){pokemon in
+                            NavigationLink{
+                                CharacterDetailView(pokemon: pokemon)
+                            } label:{
+                                CharacterRow(pokemon: pokemon)
+                            }
                         }
                     }
+                    
+                    
                 }
-                
-                
-            }
             }
             
         }

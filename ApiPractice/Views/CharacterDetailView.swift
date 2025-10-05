@@ -54,7 +54,7 @@ struct CharacterDetailView: View {
                 .frame(maxWidth: .infinity, alignment:.leading)
                 //Made maxWIDTH infinity to be able to aligh to the left.
                 
-
+                
                 Spacer() //Bottom Spacer
             }
             
