@@ -6,9 +6,12 @@
 //
 
 import SwiftUI
+import Network
 
 struct CharacterView: View {
     @State var charactersVM = PokemonViewModel()
+    @State private var showAlert = false
+    let monitor = NWPathMonitor()
     
     var body: some View {
         NavigationStack{
@@ -30,8 +33,14 @@ struct CharacterView: View {
                     do{
                         try await charactersVM.getCharactersPokemon()
                     } catch{
-                        print("error")
+                        showAlert = true
                     }
+                }
+                .alert(isPresented: $showAlert) {
+                    Alert(
+                        title: Text("Error Getting Data"),
+                        message: Text("There was an error geting Pokemon Data Ensure you are connected to the Internet")
+                    )
                 }
                 
             }

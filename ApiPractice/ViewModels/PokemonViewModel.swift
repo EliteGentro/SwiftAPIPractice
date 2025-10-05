@@ -27,7 +27,7 @@ class PokemonViewModel{
                 let (data, response) = try await URLSession.shared.data(for: urlRequest)
                 
                 guard (response as? HTTPURLResponse)?.statusCode == 200 else {
-                    print("Error")
+                    print("Error: Invalid response from server")
                     return
                 }
                 
