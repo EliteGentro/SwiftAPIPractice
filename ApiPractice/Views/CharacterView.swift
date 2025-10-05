@@ -1,24 +1,24 @@
 //
-//  PhotoView.swift
-//  Foto
+//  CharacterView.swift
+//  ApiPractice
 //
-//  Created by Humberto Genaro Cisneros Salinas on 01/10/25.
+//  Created by Humberto Genaro Cisneros Salinas on 03/10/25.
 //
 
 import SwiftUI
-import Network
 
 struct CharacterView: View {
+    //Main view model that contains an array of pokemon
     @State var charactersVM = PokemonViewModel()
+    //Error handling alert
     @State private var showAlert = false
     
-    let monitor = NWPathMonitor()
     
     var body: some View {
         NavigationStack{
-            if charactersVM.isLoading{
+            if charactersVM.isLoading{ //Loading view
                 ProgressView("Loading Pokemon")
-            } else{
+            } else{ //View once loaded
             VStack{
                 Text("PokeDex")
                     .font(.system(.largeTitle, design: .rounded))
@@ -41,15 +41,15 @@ struct CharacterView: View {
         }
         .task {
             do{
-                try await charactersVM.getCharactersPokemon()
+                try await charactersVM.getCharactersPokemon() //20 GET requests of pokemon
             } catch{
-                showAlert = true
+                showAlert = true //Error
             }
         }
-        .alert(isPresented: $showAlert) {
+        .alert(isPresented: $showAlert) { //General error alert that adapts to the errorDetail
             Alert(
                 title: Text("Error Getting Data"),
-                message: Text("There was an error geting Pokemon Data. Make sure you are connected to the Internet")
+                message: Text("There was an error geting Pokemon Data. ("+charactersVM.errorDetail+")")
             )
         }
     }

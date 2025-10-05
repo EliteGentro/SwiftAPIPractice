@@ -6,6 +6,7 @@
 //
 import SwiftUI
 
+//Row view of each of the pokemon in the list with name, height and weight
 struct CharacterRow: View {
     let pokemon:Pokemon
     var body: some View {
