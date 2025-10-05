@@ -11,10 +11,14 @@ import Network
 struct CharacterView: View {
     @State var charactersVM = PokemonViewModel()
     @State private var showAlert = false
+    
     let monitor = NWPathMonitor()
     
     var body: some View {
         NavigationStack{
+            if charactersVM.isLoading{
+                ProgressView("Loading Pokemon")
+            } else{
             VStack{
                 Text("PokeDex")
                     .font(.system(.largeTitle, design: .rounded))
@@ -29,22 +33,24 @@ struct CharacterView: View {
                         }
                     }
                 }
-                .task {
-                    do{
-                        try await charactersVM.getCharactersPokemon()
-                    } catch{
-                        showAlert = true
-                    }
-                }
-                .alert(isPresented: $showAlert) {
-                    Alert(
-                        title: Text("Error Getting Data"),
-                        message: Text("There was an error geting Pokemon Data Ensure you are connected to the Internet")
-                    )
-                }
+                
                 
             }
+            }
             
+        }
+        .task {
+            do{
+                try await charactersVM.getCharactersPokemon()
+            } catch{
+                showAlert = true
+            }
+        }
+        .alert(isPresented: $showAlert) {
+            Alert(
+                title: Text("Error Getting Data"),
+                message: Text("There was an error geting Pokemon Data. Make sure you are connected to the Internet")
+            )
         }
     }
 }

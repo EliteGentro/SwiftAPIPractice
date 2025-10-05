@@ -55,7 +55,6 @@ struct Type_ :  Identifiable, Decodable{
 }
 
 
-
 struct Ability : Identifiable,Decodable{
     var id = UUID()
     var ability : AbilityDetails

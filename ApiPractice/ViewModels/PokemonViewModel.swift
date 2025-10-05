@@ -6,13 +6,17 @@
 //
 
 import Foundation
+import Combine
 
 @MainActor
 @Observable
 class PokemonViewModel{
     var arrCharacters = [Pokemon]()
+    var isLoading = false
     
     func getCharactersPokemon() async throws{
+        isLoading = true
+        defer { isLoading = false }
         for i in 1 ... 20{
             guard let url = URL(string: "https://pokeapi.co/api/v2/pokemon/\(i)")
             else{
@@ -35,8 +39,9 @@ class PokemonViewModel{
                 
                 self.arrCharacters.append(results)
             }catch{
-                print("An unexpected error occurred: \(error)")
+                throw error
             }
         }
     }
+    
 }
